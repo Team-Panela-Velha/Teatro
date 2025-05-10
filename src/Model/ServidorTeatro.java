@@ -10,6 +10,7 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
         super();
     }
 
+    @Override
     public synchronized boolean reservarAssento(int numero) throws RemoteException {
         if (numero < 0 || numero >= assentos.length) return false;
         if (assentos[numero]) return false;
@@ -17,6 +18,7 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
         return true;
     }
 
+    @Override
     public synchronized boolean cancelarReserva(int numero) throws RemoteException {
         if (numero < 0 || numero >= assentos.length) return false;
         if (!assentos[numero]) return false;
@@ -24,6 +26,7 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
         return true;
     }
 
+    @Override
     public String mostrarAssento() throws RemoteException {
         StringBuilder sb = new StringBuilder("Assentos: ");
         for (int i = 0; i < assentos.length; i++) {
