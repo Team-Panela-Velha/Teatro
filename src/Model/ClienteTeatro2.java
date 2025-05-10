@@ -4,24 +4,24 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Random;
 
-public class ClienteTeatro {
+public class ClienteTeatro2 {
     public static void main(String[] args) {
         try {
             // Conectando ao registro RMI na porta 1109
             Registry registry = LocateRegistry.getRegistry("localhost", 1109);
             Teatro teatro = (Teatro) registry.lookup("teatro");
 
-            int totalClientes = 10;        // clientes de 0 a 10
+            int totalClientes = 20;            // clientes de 10 a 20
             Random random = new Random();
 
-            for (int i = 0; i < totalClientes; i++) {
+            for (int i = 10; i < totalClientes; i++) {
                 final int clienteId = i;
 
                 new Thread(() -> {
                     try {
                         int tentativas = 0;
                         boolean sucesso = false;
-                        int assentoEscolhido = random.nextInt(5);      // assento aleatorio entre esse numero
+                        int assentoEscolhido = random.nextInt(5);
 
                         while (!sucesso && tentativas < 5) {
                             sucesso = teatro.reservarAssento(clienteId, assentoEscolhido);

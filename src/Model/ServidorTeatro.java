@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
-    private boolean[] assentos = new boolean[100];
+    private boolean[] assentos = new boolean[5];   // quantidade de assentos
 
     public ServidorTeatro() throws RemoteException {
         super();
