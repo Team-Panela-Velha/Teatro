@@ -24,7 +24,7 @@ public class ClienteTeatro {
                         int assentoEscolhido = random.nextInt(100);
 
                         while (!sucesso && tentativas < 5) {
-                            sucesso = teatro.reservarAssento(assentoEscolhido);
+                            sucesso = teatro.reservarAssento(clienteId, assentoEscolhido);
                             if (sucesso) {
                                 System.out.println("Cliente " + clienteId + ": assento " + assentoEscolhido + " reservado com sucesso!");
                             } else {
@@ -40,7 +40,7 @@ public class ClienteTeatro {
                             // 30% de chance de cancelar a reserva após 1 segundo
                             if (random.nextInt(100) < 30) {
                                 Thread.sleep(1000);
-                                boolean cancelado = teatro.cancelarReserva(assentoEscolhido);
+                                boolean cancelado = teatro.cancelarReserva(clienteId, assentoEscolhido);
                                 if (cancelado) {
                                     System.out.println("Cliente " + clienteId + ": cancelou a reserva do assento " + assentoEscolhido);
                                 }
