@@ -12,17 +12,31 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
 
     @Override
     public synchronized boolean reservarAssento(int numero) throws RemoteException {
-        if (numero < 0 || numero >= assentos.length) return false;
-        if (assentos[numero]) return false;
+        if (numero < 0 || numero >= assentos.length) {
+            System.out.println("Tentativa de reserva inválida para o assento " + numero);
+            return false;
+        }
+        if (assentos[numero]) {
+            System.out.println("Assento " + numero + " já está ocupado.");
+            return false;
+        }
         assentos[numero] = true;
+        System.out.println("Assento " + numero + " reservado com sucesso.");
         return true;
     }
 
     @Override
     public synchronized boolean cancelarReserva(int numero) throws RemoteException {
-        if (numero < 0 || numero >= assentos.length) return false;
-        if (!assentos[numero]) return false;
+        if (numero < 0 || numero >= assentos.length) {
+            System.out.println("Tentativa de cancelamento inválida para o assento " + numero);
+            return false;
+        }
+        if (!assentos[numero]) {
+            System.out.println("Assento " + numero + " já está livre.");
+            return false;
+        }
         assentos[numero] = false;
+        System.out.println("Reserva do assento " + numero + " cancelada com sucesso.");
         return true;
     }
 
