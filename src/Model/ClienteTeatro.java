@@ -19,31 +19,34 @@ public class ClienteTeatro {
 
                 new Thread(() -> {
                     try {
-                        int tentativas = 0;
                         boolean sucesso = false;
-                        int assentoEscolhido = random.nextInt(100);
+                        int tentativas = 0;
 
-                        while (!sucesso && tentativas < 5) {
+                        while (!sucesso) {
+                            int assentoEscolhido = random.nextInt(100); // Escolhe um assento aleatório
                             sucesso = teatro.reservarAssento(clienteId, assentoEscolhido);
+
                             if (sucesso) {
                                 System.out.println("Cliente " + clienteId + ": assento " + assentoEscolhido + " reservado com sucesso!");
+
+                                // 30% de chance de cancelar a reserva após 1 segundo
+                                if (random.nextInt(100) < 30) {
+                                    Thread.sleep(1000);
+                                    boolean cancelado = teatro.cancelarReserva(clienteId, assentoEscolhido);
+                                    if (cancelado) {
+                                        System.out.println("Cliente " + clienteId + ": cancelou a reserva do assento " + assentoEscolhido);
+                                    }
+                                }
                             } else {
-                                System.out.println("Cliente " + clienteId + ": assento " + assentoEscolhido + " ocupado, aguardando...");
-                                Thread.sleep(500);
+                                System.out.println("Cliente " + clienteId + ": assento " + assentoEscolhido + " ocupado, tentando outro...");
+                                Thread.sleep(500); // Espera antes de tentar novamente
                                 tentativas++;
                             }
-                        }
 
-                        if (!sucesso) {
-                            System.out.println("Cliente " + clienteId + ": desistiu após várias tentativas.");
-                        } else {
-                            // 30% de chance de cancelar a reserva após 1 segundo
-                            if (random.nextInt(100) < 30) {
-                                Thread.sleep(1000);
-                                boolean cancelado = teatro.cancelarReserva(clienteId, assentoEscolhido);
-                                if (cancelado) {
-                                    System.out.println("Cliente " + clienteId + ": cancelou a reserva do assento " + assentoEscolhido);
-                                }
+                            // Limite de tentativas para evitar loops infinitos
+                            if (tentativas >= 10) {
+                                System.out.println("Cliente " + clienteId + ": desistiu após várias tentativas.");
+                                break;
                             }
                         }
                     } catch (Exception e) {
