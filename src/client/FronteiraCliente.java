@@ -1,7 +1,9 @@
-package Model;
+package client;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+import common.Teatro;
 
 public class FronteiraCliente {
     public static void main(String[] args) {

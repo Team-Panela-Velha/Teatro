@@ -1,5 +1,8 @@
-package Model;
+package server;
 import java.util.*;
+
+import common.Teatro;
+
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
 
