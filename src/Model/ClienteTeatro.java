@@ -4,11 +4,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Random;
 
-public class ClienteTeatro {
+public class ClienteTeatro{
     public static void main(String[] args) {
         try {
             // Conectando ao registro RMI na porta 1109
-            Registry registry = LocateRegistry.getRegistry("localhost", 1109);
+            Registry registry = LocateRegistry.getRegistry("26.136.90.164", 1109);
             Teatro teatro = (Teatro) registry.lookup("teatro");
 
             int totalClientes = 10;        // clientes de 0 a 10

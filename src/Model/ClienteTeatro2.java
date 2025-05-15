@@ -8,7 +8,7 @@ public class ClienteTeatro2 {
     public static void main(String[] args) {
         try {
             // Conectando ao registro RMI na porta 1109
-            Registry registry = LocateRegistry.getRegistry("localhost", 1109);
+            Registry registry = LocateRegistry.getRegistry("26.136.90.164", 1109);
             Teatro teatro = (Teatro) registry.lookup("teatro");
 
             int totalClientes = 20;            // clientes de 10 a 20

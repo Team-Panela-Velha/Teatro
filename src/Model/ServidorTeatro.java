@@ -54,7 +54,7 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
     public static void main(String[] args) throws Exception {
         java.rmi.registry.LocateRegistry.createRegistry(1109);
         Teatro teatro = new ServidorTeatro();
-        java.rmi.Naming.rebind("rmi://localhost:1109/teatro", teatro);
+        java.rmi.Naming.rebind("rmi://26.136.90.164:1109/teatro", teatro);
         System.out.println("Servidor do teatro pronto!");
     }
 }
