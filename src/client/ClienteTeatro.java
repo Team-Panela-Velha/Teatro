@@ -1,6 +1,8 @@
-package Model;
+package client;
 
 import java.util.Random;
+
+import common.Teatro;
 
 public class ClienteTeatro implements Runnable{
     

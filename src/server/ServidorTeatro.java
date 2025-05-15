@@ -1,7 +1,9 @@
-package Model;
+package server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
+import common.Teatro;
 
 public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
     private boolean[] assentos = new boolean[100];
