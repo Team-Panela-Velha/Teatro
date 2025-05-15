@@ -48,7 +48,11 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
         for (int i = 0; i < assentos.length; i++) {
             sb.append(i).append(assentos[i] ? " [X] " : " [_] ");
         }
-        return sb.toString();
+
+        String reservas = sb.toString();
+        System.out.println(reservas);
+
+        return reservas;
     }
 
     public static void main(String[] args) throws Exception {
