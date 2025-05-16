@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import common.Teatro;
 
 public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
-    private boolean[] assentos = new boolean[100];
+    private boolean[] assentos = new boolean[5];
 
     public ServidorTeatro() throws RemoteException {
         super();
@@ -15,33 +15,35 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
     // Removed duplicate method to resolve the compile error
 
     @Override
-    public synchronized boolean reservarAssento(int clienteId, int numero) throws RemoteException {
-        if (numero < 0 || numero >= assentos.length) {
-            System.out.println("Cliente " + clienteId + ": Tentativa de reserva inválida para o assento " + numero);
-            return false;
+    public synchronized int reservarAssento(int clienteId) throws RemoteException {
+        while (true) {
+            for (int i = 0; i < assentos.length; i++) {
+                if (!assentos[i]) {
+                    assentos[i] = true;
+                    System.out.println("Cliente " + clienteId + ": Assento " + i + " reservado com sucesso.");
+
+                    return i;
+                }
+            }
+
+            System.out.println("Cliente: " + clienteId + " entrou na fila de espera...");
+
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RemoteException("Thread interrompida", e);
+            }
         }
-        if (assentos[numero]) {
-            System.out.println("Cliente " + clienteId + ": Assento " + numero + " já está ocupado.");
-            return false;
-        }
-        assentos[numero] = true;
-        System.out.println("Cliente " + clienteId + ": Assento " + numero + " reservado com sucesso.");
-        return true;
     }
 
     @Override
-    public synchronized boolean cancelarReserva(int clienteId, int numero) throws RemoteException {
-        if (numero < 0 || numero >= assentos.length) {
-            System.out.println("Cliente " + clienteId + ": Tentativa de cancelamento inválida para o assento " + numero);
-            return false;
-        }
-        if (!assentos[numero]) {
-            System.out.println("Cliente " + clienteId + ": Assento " + numero + " já está livre.");
-            return false;
-        }
-        assentos[numero] = false;
-        System.out.println("Cliente " + clienteId + ": Reserva do assento " + numero + " cancelada com sucesso.");
-        return true;
+    public synchronized void cancelarReserva(int clienteId, int assento) throws RemoteException {
+        if (assento < 0 || assento >= assentos.length);
+
+        assentos[assento] = false;
+        System.out.println("Cliente " + clienteId + " cancelou o assento " + assento);
+        notifyAll(); // avisa quem está esperando
     }
 
     @Override

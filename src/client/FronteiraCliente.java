@@ -12,7 +12,7 @@ public class FronteiraCliente {
             Registry registry = LocateRegistry.getRegistry("localhost", 1109);
             Teatro teatro = (Teatro) registry.lookup("teatro");
 
-            int totalClientes = 100;
+            int totalClientes = 10;
 
             for (int i = 0; i < totalClientes; i++) {
                 final int id = i;

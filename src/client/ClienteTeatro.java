@@ -7,8 +7,6 @@ import common.Teatro;
 public class ClienteTeatro implements Runnable{
     
     private int clienteId;
-    private boolean sucesso = false;
-    private int tentativas = 0;
     private Teatro teatro;
     private Random random = new Random();
 
@@ -18,33 +16,16 @@ public class ClienteTeatro implements Runnable{
     }
     
     public void run() {
-        try {
-            while (!sucesso) {
-                int assentoEscolhido = random.nextInt(100); // Escolhe um assento aleatório
-                sucesso = teatro.reservarAssento(clienteId, assentoEscolhido);
+         try {
+            int assento = teatro.reservarAssento(clienteId);
 
-                if (sucesso) {
-                    System.out.println("Cliente " + clienteId + ": assento " + assentoEscolhido + " reservado com sucesso!");
+            System.out.println("Cliente " + clienteId + " reservou o assento " + assento);
+            Thread.sleep(1000);
 
-                    // 30% de chance de cancelar a reserva após 1 segundo
-                    if (random.nextInt(100) < 30) {
-                        Thread.sleep(1000);
-                        boolean cancelado = teatro.cancelarReserva(clienteId, assentoEscolhido);
-                        if (cancelado) {
-                            System.out.println("Cliente " + clienteId + ": cancelou a reserva do assento " + assentoEscolhido);
-                        }
-                    }
-                } else {
-                    System.out.println("Cliente " + clienteId + ": assento " + assentoEscolhido + " ocupado, tentando outro...");
-                    Thread.sleep(500); // Espera antes de tentar novamente
-                    tentativas++;
-                }
+            if (random.nextInt(100) < 50) { // 50% chance de cancelar
+                teatro.cancelarReserva(clienteId, assento);
 
-                // Limite de tentativas para evitar loops infinitos
-                if (tentativas >= 10) {
-                    System.out.println("Cliente " + clienteId + ": desistiu após várias tentativas.");
-                    break;
-                }
+                System.out.println("Cliente " + clienteId + " cancelou o assento " + assento);
             }
         } catch (Exception e) {
             System.out.println("Erro no cliente " + clienteId);
