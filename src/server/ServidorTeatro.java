@@ -3,10 +3,14 @@ package server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import common.Teatro;
 
 public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
-    private boolean[] assentos = new boolean[5];
+    private boolean[] assentos = new boolean[100];
+    private Set<Integer> fila = new HashSet<>();
 
     public ServidorTeatro() throws RemoteException {
         super();
@@ -20,13 +24,17 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
             for (int i = 0; i < assentos.length; i++) {
                 if (!assentos[i]) {
                     assentos[i] = true;
+                    fila.remove(clienteId);
                     System.out.println("Cliente " + clienteId + ": Assento " + i + " reservado com sucesso.");
 
                     return i;
                 }
             }
 
-            System.out.println("Cliente: " + clienteId + " entrou na fila de espera...");
+            if (!fila.contains(clienteId)) {
+                fila.add(clienteId);
+                System.out.println("Cliente " + clienteId + " entrou na fila de espera...");
+            }
 
             try {
                 wait();
@@ -54,7 +62,6 @@ public class ServidorTeatro extends UnicastRemoteObject implements Teatro {
         }
 
         String reservas = sb.toString();
-        System.out.println(reservas);
 
         return reservas;
     }
