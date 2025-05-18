@@ -22,7 +22,7 @@ public class ClienteTeatro implements Runnable{
             System.out.println("Cliente " + clienteId + " reservou o assento " + assento);
             Thread.sleep(1000);
 
-            if (random.nextInt(100) < 50) { // 50% chance de cancelar
+            if (random.nextInt(100) < 70) { // 70% chance de cancelar
                 teatro.cancelarReserva(clienteId, assento);
 
                 System.out.println("Cliente " + clienteId + " cancelou o assento " + assento);
