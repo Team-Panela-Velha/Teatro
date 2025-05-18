@@ -45,8 +45,6 @@ public class TeatroImplements extends UnicastRemoteObject implements Teatro{
 
     @Override
     public synchronized void cancelarReserva(int clienteId, int assento) throws RemoteException {
-        if (assento < 0 || assento >= assentos.length);
-
         assentos[assento] = false;
         System.out.println("Cliente " + clienteId + " cancelou o assento " + assento);
         notifyAll(); // avisa quem está esperando
